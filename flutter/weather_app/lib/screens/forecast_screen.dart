@@ -150,8 +150,8 @@ class ForecastScreen extends StatelessWidget {
                     Expanded(
                       child: InfoBox(
                         title: "UV INDEX",
-                        subtitle: "4",
-                        extra: "Moderate",
+                        subtitle: "4 Moderate",
+                        // extra: "",
                         icon: Image.asset(
                           'assets/sunburst.png',
                           width: 36,
@@ -213,20 +213,22 @@ class ForecastCard extends StatelessWidget {
 class InfoBox extends StatelessWidget {
   final String title;
   final String subtitle;
-  final String extra;
   final Widget icon; // ✅ এখন Widget নিচ্ছে
+  final String? extra;
 
   const InfoBox({
     super.key,
     required this.title,
     required this.subtitle,
-    required this.extra,
     required this.icon,
+    this.extra,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: 161,
+      height: 160,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white.withOpacity(0.1),
@@ -243,14 +245,15 @@ class InfoBox extends StatelessWidget {
               const SizedBox(width: 6),
               Text(
                 title,
-                style: const TextStyle(color: Colors.white70),
+                style: const TextStyle(color: Colors.white, fontSize: 16),
               ),
             ],
           ),
           const SizedBox(height: 8),
-          Text(subtitle, style: const TextStyle(fontSize: 20, color: Colors.white)),
+          Expanded(child: Text(subtitle, style: const TextStyle(fontSize: 28, color: Colors.white, fontWeight: FontWeight.w600 ))),
           const SizedBox(height: 4),
-          Text(extra, style: const TextStyle(fontSize: 14, color: Colors.white70)),
+          if (extra != null)
+            Text(extra!, style: const TextStyle(fontSize: 14, color: Colors.white70)),
         ],
       ),
     );
