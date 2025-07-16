@@ -54,10 +54,22 @@ class _CounterHomePageState extends State<CounterHomePage> {
     });
   }
 
-  void _decrementCounter() {
+  void _decrementCounter(context) {
     setState(() {
       if (_counter > 0) _counter--;
     });
+    if(_counter <= 0) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Counter is 0!',
+              style: TextStyle(fontSize: 16, color: Colors.white),
+            ),
+            backgroundColor: Colors.teal,
+            duration: Duration(seconds: 2),
+          )
+      );
+    }
   }
 
   void _resetCounter(context) {
@@ -126,7 +138,7 @@ class _CounterHomePageState extends State<CounterHomePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     ElevatedButton.icon(
-                      onPressed: _decrementCounter,
+                      onPressed: () => _decrementCounter(context),
                       icon: const Icon(
                         Icons.remove,
                         color: Colors.white,
