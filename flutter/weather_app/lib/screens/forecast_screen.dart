@@ -55,18 +55,29 @@ class ForecastScreen extends StatelessWidget {
                 const SizedBox(height: 16),
 
                 // 👉 Forecast Cards (horizontal)
-                SizedBox(
-                  height: 150,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: const [
-                      ForecastCard(day: "Mon", temp: "19°C", icon: '🌦️'),
-                      ForecastCard(day: "Tue", temp: "18°C", icon: '🌧️'),
-                      ForecastCard(day: "Wed", temp: "18°C", icon: '🌧️'),
-                      ForecastCard(day: "Thu", temp: "19°C", icon: '🌦️'),
-                    ],
-                  ),
-                ),
+                // IconButton(
+                //   icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+                //   onPressed: (){},
+                // ),
+                // SizedBox(
+                //   height: 150,
+                //   child: ListView(
+                //     scrollDirection: Axis.horizontal,
+                //     children: const [
+                //       ForecastCard(day: "Mon", temp: "19°C", icon: '🌦️', width: 80,),
+                //       ForecastCard(day: "Tue", temp: "18°C", icon: '🌧️', width: 80,),
+                //       ForecastCard(day: "Wed", temp: "18°C", icon: '🌧️', width: 80,),
+                //       ForecastCard(day: "Thu", temp: "19°C", icon: '🌦️', width: 80,),
+                //     ],
+                //   ),
+                // ),
+                // IconButton(
+                //   icon: const Icon(Icons.arrow_forward_ios, color: Colors.white),
+                //   onPressed: (){},
+                // ),
+
+
+                ForecastSlider(),
 
                 const SizedBox(height: 24),
 
@@ -77,7 +88,7 @@ class ForecastScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     gradient: const LinearGradient(
-                      colors: [Color(0xFF3E2D8F), Color(0xFF9D52AC)],
+                      colors: [Color(0xFF3E2D8F), Color(0xFF533595) , Color(0xFF9D52AC)],
                       begin: Alignment.topRight,
                       end: Alignment.bottomLeft,
                     ),
@@ -189,13 +200,20 @@ class ForecastCard extends StatelessWidget {
   final String day;
   final String temp;
   final String icon;
+  final double width;
 
-  const ForecastCard({super.key, required this.day, required this.temp, required this.icon});
+  const ForecastCard({
+    super.key,
+    required this.day,
+    required this.temp,
+    required this.icon,
+    required this.width,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 80,
+      width: width,
       margin: const EdgeInsets.only(right: 12),
       padding: const EdgeInsets.symmetric(vertical: 16),
       decoration: BoxDecoration(
@@ -213,16 +231,17 @@ class ForecastCard extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(temp, style: const TextStyle(color: Colors.white, fontSize: 18)),
+          Text(temp, style: const TextStyle(color: Colors.white, fontSize: 16)),
           const SizedBox(height: 8),
           Text(icon, style: const TextStyle(fontSize: 24)),
           const SizedBox(height: 8),
-          Text(day, style: const TextStyle(color: Colors.white, fontSize: 18)),
+          Text(day, style: const TextStyle(color: Colors.white, fontSize: 16)),
         ],
       ),
     );
   }
 }
+
 
 class InfoBox extends StatelessWidget {
   final String title;
@@ -248,6 +267,7 @@ class InfoBox extends StatelessWidget {
         gradient: const LinearGradient(
           colors: [
             Color(0xFF3E2D8F),
+            Color(0xFF533595),
             Color(0xFF9D52AC),
           ],
           begin: Alignment.topRight,
@@ -281,5 +301,74 @@ class InfoBox extends StatelessWidget {
     );
   }
 }
+
+
+class ForecastSlider extends StatefulWidget {
+  const ForecastSlider({super.key});
+
+  @override
+  State<ForecastSlider> createState() => _ForecastSliderState();
+}
+
+class _ForecastSliderState extends State<ForecastSlider> {
+  final ScrollController _scrollController = ScrollController();
+
+  void scrollLeft() {
+    _scrollController.animateTo(
+      _scrollController.offset - 100,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  void scrollRight() {
+    _scrollController.animateTo(
+      _scrollController.offset + 100,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final double totalHorizontalPadding = 96;
+    final double cardWidth = (MediaQuery.of(context).size.width - totalHorizontalPadding) / 4;
+
+    // final double cardWidth = (MediaQuery.of(context).size.width - 80) / 4;
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+
+      children: [
+        IconButton(
+          icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+          onPressed: scrollLeft,
+        ),
+        Expanded(
+          child: SizedBox(
+            height: 150,
+            child: ListView(
+              controller: _scrollController,
+              scrollDirection: Axis.horizontal,
+              children: [
+                ForecastCard(day: "Mon", temp: "19°C", icon: '🌦️',width: cardWidth),
+                ForecastCard(day: "Tue", temp: "18°C", icon: '🌧️',width: cardWidth),
+                ForecastCard(day: "Wed", temp: "18°C", icon: '🌧️',width: cardWidth),
+                ForecastCard(day: "Thu", temp: "19°C", icon: '🌦️',width: cardWidth),
+              ],
+            ),
+          ),
+        ),
+        IconButton(
+          icon: const Icon(Icons.arrow_forward_ios, color: Colors.white),
+          onPressed: scrollRight,
+        ),
+      ],
+    );
+  }
+}
+
+
 
 
