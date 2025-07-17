@@ -77,9 +77,9 @@ class ForecastScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     gradient: const LinearGradient(
-                      colors: [Color(0xFF9D52AC), Color(0xFF3E2D8F)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
+                      colors: [Color(0xFF3E2D8F), Color(0xFF9D52AC)],
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomLeft,
                     ),
                   ),
                   padding: const EdgeInsets.all(16),
@@ -137,7 +137,22 @@ class ForecastScreen extends StatelessWidget {
                       child: InfoBox(
                         title: "SUNRISE",
                         subtitle: "5:28 AM",
-                        extra: "Sunset: 7.25PM",
+                        // extra: "Sunset: 7.25PM",
+                        extra: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text("Sunset: ", style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600
+
+                              )
+                            ),
+                            Text("5:28 AM",  style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.white70))
+                          ],
+                        ),
                         icon: Image.asset(
                           'assets/sunburst.png',
                           width: 36,
@@ -151,7 +166,6 @@ class ForecastScreen extends StatelessWidget {
                       child: InfoBox(
                         title: "UV INDEX",
                         subtitle: "4 Moderate",
-                        // extra: "",
                         icon: Image.asset(
                           'assets/sunburst.png',
                           width: 36,
@@ -214,7 +228,7 @@ class InfoBox extends StatelessWidget {
   final String title;
   final String subtitle;
   final Widget icon; // ✅ এখন Widget নিচ্ছে
-  final String? extra;
+  final Widget? extra;
 
   const InfoBox({
     super.key,
@@ -231,9 +245,16 @@ class InfoBox extends StatelessWidget {
       height: 160,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.1),
+        gradient: const LinearGradient(
+          colors: [
+            Color(0xFF3E2D8F),
+            Color(0xFF9D52AC),
+          ],
+          begin: Alignment.topRight,
+          end: Alignment.bottomCenter,
+        ),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.white24),
+        border: Border.all(color: Color(0xFFF7CBFD),),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -252,8 +273,9 @@ class InfoBox extends StatelessWidget {
           const SizedBox(height: 8),
           Expanded(child: Text(subtitle, style: const TextStyle(fontSize: 28, color: Colors.white, fontWeight: FontWeight.w600 ))),
           const SizedBox(height: 4),
-          if (extra != null)
-            Text(extra!, style: const TextStyle(fontSize: 14, color: Colors.white70)),
+          // if (extra != null)
+            // Text(extra!, style: const TextStyle(fontSize: 14, color: Colors.white70)),
+          if (extra != null) extra!,
         ],
       ),
     );
