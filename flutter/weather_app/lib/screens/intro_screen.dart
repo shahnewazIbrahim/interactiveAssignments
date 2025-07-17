@@ -58,7 +58,7 @@ class IntroScreen extends StatelessWidget {
               const SizedBox(height: 32),
               // 🚀 Get Start Button
               SizedBox(
-                width: 280,
+                width: 298,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFE1B646),
