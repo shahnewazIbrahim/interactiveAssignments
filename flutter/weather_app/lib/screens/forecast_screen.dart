@@ -60,10 +60,10 @@ class ForecastScreen extends StatelessWidget {
                   child: ListView(
                     scrollDirection: Axis.horizontal,
                     children: const [
-                      ForecastCard(day: "Mon", temp: "19°C", icon: '🌧️'),
-                      ForecastCard(day: "Tue", temp: "18°C", icon: '🌦️'),
-                      ForecastCard(day: "Wed", temp: "18°C", icon: '🌦️'),
-                      ForecastCard(day: "Thu", temp: "19°C", icon: '🌧️'),
+                      ForecastCard(day: "Mon", temp: "19°C", icon: '🌦️'),
+                      ForecastCard(day: "Tue", temp: "18°C", icon: '🌧️'),
+                      ForecastCard(day: "Wed", temp: "18°C", icon: '🌧️'),
+                      ForecastCard(day: "Thu", temp: "19°C", icon: '🌦️'),
                     ],
                   ),
                 ),
